@@ -5,6 +5,8 @@ import 'package:project_application/providers/quiz_provider.dart';
 import 'package:project_application/providers/settings_provider.dart';
 import 'package:project_application/screens/home_screen.dart';
 import 'package:project_application/services/vibration_service.dart';
+import 'package:project_application/services/notification_service.dart';
+import 'package:project_application/services/background_service.dart';
 import 'package:project_application/utils/constants.dart';
 import 'package:project_application/utils/localization.dart';
 import 'package:project_application/utils/theme.dart';
@@ -14,7 +16,27 @@ void main() async {
 
   // Initialize vibration service
   final vibrationService = VibrationService();
-  await vibrationService.init();
+  try {
+    await vibrationService.init();
+  } catch (e) {
+    print('Failed to initialize vibration service: $e');
+  }
+
+  // Initialize notification service
+  final notificationService = NotificationService();
+  try {
+    await notificationService.initialize();
+  } catch (e) {
+    print('Failed to initialize notification service: $e');
+  }
+
+  // Initialize background service
+  final backgroundService = BackgroundService();
+  try {
+    await backgroundService.start();
+  } catch (e) {
+    print('Failed to initialize background service: $e');
+  }
 
   runApp(const MyApp());
 }
@@ -56,7 +78,7 @@ class _AppWithSettingsState extends State<AppWithSettings> {
     final settingsProvider = Provider.of<SettingsProvider>(context);
 
     return MaterialApp(
-      title: 'Quiz App',
+      title: 'QCM App',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: settingsProvider.darkMode ? ThemeMode.dark : ThemeMode.light,

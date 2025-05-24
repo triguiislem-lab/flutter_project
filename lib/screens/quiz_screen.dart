@@ -19,18 +19,27 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   final SoundService _soundService = SoundService();
   final VibrationService _vibrationService = VibrationService();
+  bool _isNavigatingToResults = false; // Prevent multiple navigations
 
   @override
   void initState() {
     super.initState();
     // Listen for quiz completion
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final quizProvider = Provider.of<QuizProvider>(context, listen: false);
-
-      if (quizProvider.status == QuizStatus.completed) {
-        _navigateToResults();
+      if (mounted) {
+        final quizProvider = Provider.of<QuizProvider>(context, listen: false);
+        if (quizProvider.status == QuizStatus.completed &&
+            !_isNavigatingToResults) {
+          _navigateToResults();
+        }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    // Clean up any resources if needed
+    super.dispose();
   }
 
   @override
@@ -39,16 +48,21 @@ class _QuizScreenState extends State<QuizScreen> {
     final localizations = AppLocalizations.of(context);
 
     // Navigate to results screen if quiz is completed
-    if (quizProvider.status == QuizStatus.completed) {
+    if (quizProvider.status == QuizStatus.completed &&
+        !_isNavigatingToResults) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _navigateToResults();
+        if (mounted) {
+          _navigateToResults();
+        }
       });
     }
 
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) async {
+      onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
+
+        final navigator = Navigator.of(context);
         // Show confirmation dialog before exiting quiz
         final shouldPop = await showDialog<bool>(
           context: context,
@@ -71,8 +85,8 @@ class _QuizScreenState extends State<QuizScreen> {
                 ],
               ),
         );
-        if (shouldPop == true) {
-          Navigator.of(context).pop();
+        if (shouldPop == true && mounted) {
+          navigator.pop();
         }
       },
       child: Scaffold(
@@ -163,6 +177,9 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   void _navigateToResults() {
+    if (_isNavigatingToResults || !mounted) return;
+
+    _isNavigatingToResults = true;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => ResultsScreen()),

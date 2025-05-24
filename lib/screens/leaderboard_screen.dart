@@ -149,7 +149,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
             onPressed: () {
               Navigator.pop(context);
               _soundService.playClickSound();
-              _vibrationService.vibrateClick();
+              _vibrationService.vibrateOnTap();
             },
             child: Text(localizations.get('cancel')),
           ),
@@ -160,7 +160,7 @@ class _LeaderboardScreenState extends State<LeaderboardScreen> {
                 _loadResults();
               });
               _soundService.playClickSound();
-              _vibrationService.vibrateClick();
+              _vibrationService.vibrateOnTap();
             },
             child: Text(localizations.get('ok')),
           ),

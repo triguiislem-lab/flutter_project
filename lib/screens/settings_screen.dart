@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:project_application/providers/settings_provider.dart';
+import 'package:project_application/screens/notification_settings_screen.dart';
 import 'package:project_application/services/sound_service.dart';
 import 'package:project_application/services/vibration_service.dart';
 import 'package:project_application/utils/constants.dart';
@@ -32,7 +33,7 @@ class SettingsScreen extends StatelessWidget {
               onChanged: (value) {
                 settingsProvider.toggleDarkMode();
                 _soundService.playClickSound();
-                _vibrationService.vibrateClick();
+                _vibrationService.vibrateOnTap();
               },
             ),
           ),
@@ -49,7 +50,7 @@ class SettingsScreen extends StatelessWidget {
                 if (value) {
                   _soundService.playClickSound();
                 }
-                _vibrationService.vibrateClick();
+                _vibrationService.vibrateOnTap();
               },
             ),
           ),
@@ -65,25 +66,31 @@ class SettingsScreen extends StatelessWidget {
                 settingsProvider.toggleVibration();
                 _soundService.playClickSound();
                 if (value) {
-                  _vibrationService.vibrateClick();
+                  _vibrationService.vibrateOnTap();
                 }
               },
             ),
           ),
 
-          // Notifications toggle
-          _buildSettingTile(
+          // Notifications settings
+          _buildNavigationTile(
             context,
             title: localizations.get('notifications'),
             icon: Icons.notifications,
-            trailing: Switch(
-              value: settingsProvider.notificationsEnabled,
-              onChanged: (value) {
-                settingsProvider.toggleNotifications();
-                _soundService.playClickSound();
-                _vibrationService.vibrateClick();
-              },
-            ),
+            subtitle:
+                settingsProvider.notificationsEnabled
+                    ? 'Activées'
+                    : 'Désactivées',
+            onTap: () {
+              _soundService.playClickSound();
+              _vibrationService.vibrateOnTap();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationSettingsScreen(),
+                ),
+              );
+            },
           ),
 
           // Language selection
@@ -97,7 +104,7 @@ class SettingsScreen extends StatelessWidget {
                 if (value != null) {
                   settingsProvider.setLanguage(value);
                   _soundService.playClickSound();
-                  _vibrationService.vibrateClick();
+                  _vibrationService.vibrateOnTap();
                 }
               },
               items: [
@@ -133,6 +140,25 @@ class SettingsScreen extends StatelessWidget {
         leading: Icon(icon),
         title: Text(title),
         trailing: trailing,
+      ),
+    );
+  }
+
+  Widget _buildNavigationTile(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: AppConstants.smallPadding),
+      child: ListTile(
+        leading: Icon(icon),
+        title: Text(title),
+        subtitle: Text(subtitle),
+        trailing: const Icon(Icons.arrow_forward_ios),
+        onTap: onTap,
       ),
     );
   }

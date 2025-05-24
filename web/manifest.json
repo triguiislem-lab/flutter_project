@@ -1,11 +1,11 @@
 {
-    "name": "project_application",
-    "short_name": "project_application",
+    "name": "QCM App",
+    "short_name": "QCM App",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "QCM App - Interactive Quiz Application with Multiple Choice Questions",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

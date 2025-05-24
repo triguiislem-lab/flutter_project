@@ -107,7 +107,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                     _showAnswers = !_showAnswers;
                   });
                   _soundService.playClickSound();
-                  _vibrationService.vibrateClick();
+                  _vibrationService.vibrateOnTap();
                 },
                 icon: Icon(
                   _showAnswers ? Icons.visibility_off : Icons.visibility,
@@ -191,7 +191,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           ),
                         );
                         _soundService.playClickSound();
-                        _vibrationService.vibrateClick();
+                        _vibrationService.vibrateOnTap();
                       },
                       icon: const Icon(Icons.replay),
                       label: Text(localizations.get('playAgain')),
@@ -210,7 +210,7 @@ class _ResultsScreenState extends State<ResultsScreen> {
                           (route) => false,
                         );
                         _soundService.playClickSound();
-                        _vibrationService.vibrateClick();
+                        _vibrationService.vibrateOnTap();
                       },
                       icon: const Icon(Icons.home),
                       label: Text(localizations.get('returnToHome')),

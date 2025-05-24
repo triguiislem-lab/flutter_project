@@ -5,7 +5,7 @@ import 'package:project_application/utils/localization.dart';
 class TimerWidget extends StatelessWidget {
   final int timeLeft;
   final int totalTime;
-  
+
   const TimerWidget({
     super.key,
     required this.timeLeft,
@@ -15,10 +15,10 @@ class TimerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    
+
     // Calculate progress (inverted for countdown)
     final progress = timeLeft / totalTime;
-    
+
     // Determine color based on time left
     Color timerColor;
     if (timeLeft > totalTime * 0.6) {
@@ -28,19 +28,16 @@ class TimerWidget extends StatelessWidget {
     } else {
       timerColor = Colors.red;
     }
-    
+
     return Row(
       children: [
         // Time text
         Text(
           '$timeLeft ${localizations.get('seconds')}',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: timerColor,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: timerColor),
         ),
         const SizedBox(width: AppConstants.smallPadding),
-        
+
         // Timer icon
         Stack(
           alignment: Alignment.center,
@@ -53,16 +50,12 @@ class TimerWidget extends StatelessWidget {
                 value: progress,
                 strokeWidth: 3,
                 color: timerColor,
-                backgroundColor: Colors.grey.withOpacity(0.3),
+                backgroundColor: Colors.grey.withValues(alpha: 0.3),
               ),
             ),
-            
+
             // Timer icon
-            Icon(
-              Icons.timer,
-              size: 16,
-              color: timerColor,
-            ),
+            Icon(Icons.timer, size: 16, color: timerColor),
           ],
         ),
       ],

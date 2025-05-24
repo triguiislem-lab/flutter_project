@@ -85,7 +85,7 @@ class _QuizOptionsScreenState extends State<QuizOptionsScreen> {
                           _selectedCategoryId = categoryId;
                         });
                         _soundService.playClickSound();
-                        _vibrationService.vibrateClick();
+                        _vibrationService.vibrateOnTap();
                       },
                     ),
                     const SizedBox(height: AppConstants.defaultPadding),
@@ -103,7 +103,7 @@ class _QuizOptionsScreenState extends State<QuizOptionsScreen> {
                           _selectedDifficulty = difficulty;
                         });
                         _soundService.playClickSound();
-                        _vibrationService.vibrateClick();
+                        _vibrationService.vibrateOnTap();
                       },
                     ),
                     const SizedBox(height: AppConstants.defaultPadding),
@@ -127,7 +127,7 @@ class _QuizOptionsScreenState extends State<QuizOptionsScreen> {
                                     _numberOfQuestions = amount;
                                   });
                                   _soundService.playClickSound();
-                                  _vibrationService.vibrateClick();
+                                  _vibrationService.vibrateOnTap();
                                 }
                               },
                             );
@@ -153,7 +153,7 @@ class _QuizOptionsScreenState extends State<QuizOptionsScreen> {
                                 _selectedType = 'multiple';
                               });
                               _soundService.playClickSound();
-                              _vibrationService.vibrateClick();
+                              _vibrationService.vibrateOnTap();
                             }
                           },
                         ),
@@ -166,7 +166,7 @@ class _QuizOptionsScreenState extends State<QuizOptionsScreen> {
                                 _selectedType = 'boolean';
                               });
                               _soundService.playClickSound();
-                              _vibrationService.vibrateClick();
+                              _vibrationService.vibrateOnTap();
                             }
                           },
                         ),
@@ -179,7 +179,7 @@ class _QuizOptionsScreenState extends State<QuizOptionsScreen> {
                                 _selectedType = 'any';
                               });
                               _soundService.playClickSound();
-                              _vibrationService.vibrateClick();
+                              _vibrationService.vibrateOnTap();
                             }
                           },
                         ),
@@ -218,7 +218,7 @@ class _QuizOptionsScreenState extends State<QuizOptionsScreen> {
     );
 
     _soundService.playClickSound();
-    _vibrationService.vibrateClick();
+    _vibrationService.vibrateOnTap();
 
     quizProvider.startQuiz(options).then((_) {
       if (quizProvider.status == QuizStatus.inProgress) {

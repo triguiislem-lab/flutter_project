@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:project_application/providers/quiz_provider.dart';
 import 'package:project_application/providers/settings_provider.dart';
 import 'package:project_application/screens/about_screen.dart';
 import 'package:project_application/screens/leaderboard_screen.dart';
@@ -34,8 +33,48 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App logo or icon
-              const Icon(Icons.quiz, size: 100, color: Colors.blue),
+              // App logo
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.borderRadius,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    AppConstants.borderRadius,
+                  ),
+                  child: Image.asset(
+                    'assets/images/Quiz-logo.jpg',
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      // Fallback to icon if image fails to load
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(
+                            AppConstants.borderRadius,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.quiz,
+                          size: 60,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
               const SizedBox(height: AppConstants.largePadding),
 
               // App name
@@ -53,7 +92,7 @@ class HomeScreen extends StatelessWidget {
                 Icons.play_arrow,
                 () {
                   _soundService.playClickSound();
-                  _vibrationService.vibrateClick();
+                  _vibrationService.vibrateOnTap();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -71,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                 Icons.leaderboard,
                 () {
                   _soundService.playClickSound();
-                  _vibrationService.vibrateClick();
+                  _vibrationService.vibrateOnTap();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -89,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                 Icons.settings,
                 () {
                   _soundService.playClickSound();
-                  _vibrationService.vibrateClick();
+                  _vibrationService.vibrateOnTap();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => SettingsScreen()),
@@ -105,7 +144,7 @@ class HomeScreen extends StatelessWidget {
                 Icons.info,
                 () {
                   _soundService.playClickSound();
-                  _vibrationService.vibrateClick();
+                  _vibrationService.vibrateOnTap();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => AboutScreen()),

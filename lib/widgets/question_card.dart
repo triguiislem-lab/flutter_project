@@ -8,7 +8,7 @@ import 'package:html_unescape/html_unescape.dart';
 class QuestionCard extends StatelessWidget {
   final Question question;
   final Function(String) onAnswerSelected;
-  
+
   const QuestionCard({
     super.key,
     required this.question,
@@ -19,10 +19,10 @@ class QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
     final unescape = HtmlUnescape();
-    
+
     // Decode HTML entities in the question text
     final decodedQuestion = unescape.convert(question.question);
-    
+
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
@@ -37,7 +37,8 @@ class QuestionCard extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  AppConstants.categoryIcons[9], // Default icon if category not found
+                  AppConstants
+                      .categoryIcons[9], // Default icon if category not found
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(width: AppConstants.smallPadding),
@@ -53,8 +54,12 @@ class QuestionCard extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: AppConstants.difficultyColors[question.difficulty] ?? Colors.grey,
-                    borderRadius: BorderRadius.circular(AppConstants.borderRadius / 2),
+                    color:
+                        AppConstants.difficultyColors[question.difficulty] ??
+                        Colors.grey,
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.borderRadius / 2,
+                    ),
                   ),
                   child: Text(
                     _capitalizeFirst(question.difficulty),
@@ -67,36 +72,43 @@ class QuestionCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppConstants.defaultPadding),
-            
+
             // Question text
             Text(
               decodedQuestion,
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: AppConstants.largePadding),
-            
+
             // Answer options
             Expanded(
-              child: question.type == 'boolean'
-                  ? _buildBooleanOptions(context, localizations)
-                  : _buildMultipleChoiceOptions(context),
+              child:
+                  question.type == 'boolean'
+                      ? _buildBooleanOptions(context, localizations)
+                      : _buildMultipleChoiceOptions(context),
             ),
           ],
         ),
       ),
     );
   }
-  
+
   Widget _buildMultipleChoiceOptions(BuildContext context) {
     final unescape = HtmlUnescape();
     final answers = question.allAnswers;
-    
+
+    if (answers.isEmpty) {
+      return const Center(child: Text('No answers available'));
+    }
+
     return ListView.builder(
       itemCount: answers.length,
       itemBuilder: (context, index) {
+        if (index >= answers.length) return const SizedBox.shrink();
+
         final answer = answers[index];
         final decodedAnswer = unescape.convert(answer);
-        
+
         return AnswerOption(
           answer: decodedAnswer,
           onTap: () => onAnswerSelected(answer),
@@ -104,8 +116,11 @@ class QuestionCard extends StatelessWidget {
       },
     );
   }
-  
-  Widget _buildBooleanOptions(BuildContext context, AppLocalizations localizations) {
+
+  Widget _buildBooleanOptions(
+    BuildContext context,
+    AppLocalizations localizations,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -115,7 +130,7 @@ class QuestionCard extends StatelessWidget {
               child: AnswerOption(
                 answer: localizations.get('true'),
                 onTap: () => onAnswerSelected('True'),
-                color: Colors.green.withOpacity(0.2),
+                color: Colors.green.withValues(alpha: 0.2),
               ),
             ),
           ],
@@ -127,7 +142,7 @@ class QuestionCard extends StatelessWidget {
               child: AnswerOption(
                 answer: localizations.get('false'),
                 onTap: () => onAnswerSelected('False'),
-                color: Colors.red.withOpacity(0.2),
+                color: Colors.red.withValues(alpha: 0.2),
               ),
             ),
           ],
@@ -135,7 +150,7 @@ class QuestionCard extends StatelessWidget {
       ],
     );
   }
-  
+
   String _capitalizeFirst(String text) {
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1);

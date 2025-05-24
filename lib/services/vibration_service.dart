@@ -1,4 +1,5 @@
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:flutter/foundation.dart';
+import 'package:vibration/vibration.dart';
 
 class VibrationService {
   bool _vibrationEnabled = true;
@@ -6,8 +7,14 @@ class VibrationService {
 
   // Initialize vibration service
   Future<void> init() async {
+    // Skip vibration initialization on web platform
+    if (kIsWeb) {
+      _canVibrate = false;
+      return;
+    }
+
     try {
-      _canVibrate = await Vibrate.canVibrate;
+      _canVibrate = await Vibration.hasVibrator() ?? false;
     } catch (e) {
       print('Error initializing vibration: $e');
       _canVibrate = false;
@@ -21,10 +28,9 @@ class VibrationService {
 
   // Vibrate for correct answer
   Future<void> vibrateCorrect() async {
-    if (!_vibrationEnabled || !_canVibrate) return;
-    
+    if (kIsWeb || !_vibrationEnabled || !_canVibrate) return;
     try {
-      Vibrate.feedback(FeedbackType.success);
+      Vibration.vibrate(duration: 100);
     } catch (e) {
       print('Error vibrating for correct answer: $e');
     }
@@ -32,23 +38,21 @@ class VibrationService {
 
   // Vibrate for wrong answer
   Future<void> vibrateWrong() async {
-    if (!_vibrationEnabled || !_canVibrate) return;
-    
+    if (kIsWeb || !_vibrationEnabled || !_canVibrate) return;
     try {
-      Vibrate.feedback(FeedbackType.error);
+      Vibration.vibrate(duration: 300);
     } catch (e) {
       print('Error vibrating for wrong answer: $e');
     }
   }
 
-  // Vibrate for button click
-  Future<void> vibrateClick() async {
-    if (!_vibrationEnabled || !_canVibrate) return;
-    
+  // Vibrate on button tap
+  Future<void> vibrateOnTap() async {
+    if (kIsWeb || !_vibrationEnabled || !_canVibrate) return;
     try {
-      Vibrate.feedback(FeedbackType.selection);
+      Vibration.vibrate(duration: 50);
     } catch (e) {
-      print('Error vibrating for button click: $e');
+      print('Error vibrating on tap: $e');
     }
   }
 }
