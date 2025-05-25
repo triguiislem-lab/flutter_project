@@ -24,10 +24,13 @@ class AppLocalizations {
       'back': 'Back',
 
       // Home Screen
+      'home': 'Home',
       'startQuiz': 'Start Quiz',
       'leaderboard': 'Leaderboard',
       'settings': 'Settings',
       'about': 'About',
+      'appDescription': 'Interactive Quiz Application',
+      'madeWithLove': 'Made with ❤️ for learning',
 
       // Quiz Options Screen
       'quizOptions': 'Quiz Options',
@@ -66,6 +69,19 @@ class AppLocalizations {
       'date': 'Date',
       'clearScores': 'Clear Scores',
       'confirmClear': 'Are you sure you want to clear all scores?',
+      'allCategories': 'All Categories',
+      'results': 'results',
+      'noResultsForCategory': 'No results found for this category',
+      'selected': 'selected',
+      'selectItems': 'Select Items',
+      'selectAll': 'Select All',
+      'deselectAll': 'Deselect All',
+      'deleteSelected': 'Delete Selected',
+      'confirmDeleteSelected': 'Are you sure you want to delete',
+      'items': 'items',
+      'delete': 'Delete',
+      'clearAllScores': 'Clear All Scores',
+      'confirmClearAll': 'Are you sure you want to clear all scores?',
 
       // Settings Screen
       'darkMode': 'Dark Mode',
@@ -106,10 +122,13 @@ class AppLocalizations {
       'back': 'Retour',
 
       // Home Screen
+      'home': 'Accueil',
       'startQuiz': 'Commencer le Quiz',
       'leaderboard': 'Classement',
       'settings': 'Paramètres',
       'about': 'À propos',
+      'appDescription': 'Application de Quiz Interactif',
+      'madeWithLove': 'Fait avec ❤️ pour apprendre',
 
       // Quiz Options Screen
       'quizOptions': 'Options du Quiz',
@@ -148,6 +167,19 @@ class AppLocalizations {
       'date': 'Date',
       'clearScores': 'Effacer les Scores',
       'confirmClear': 'Êtes-vous sûr de vouloir effacer tous les scores?',
+      'allCategories': 'Toutes les Catégories',
+      'results': 'résultats',
+      'noResultsForCategory': 'Aucun résultat trouvé pour cette catégorie',
+      'selected': 'sélectionnés',
+      'selectItems': 'Sélectionner des Éléments',
+      'selectAll': 'Tout Sélectionner',
+      'deselectAll': 'Tout Désélectionner',
+      'deleteSelected': 'Supprimer la Sélection',
+      'confirmDeleteSelected': 'Êtes-vous sûr de vouloir supprimer',
+      'items': 'éléments',
+      'delete': 'Supprimer',
+      'clearAllScores': 'Effacer Tous les Scores',
+      'confirmClearAll': 'Êtes-vous sûr de vouloir effacer tous les scores?',
 
       // Settings Screen
       'darkMode': 'Mode Sombre',
@@ -188,10 +220,13 @@ class AppLocalizations {
       'back': 'رجوع',
 
       // Home Screen
+      'home': 'الرئيسية',
       'startQuiz': 'بدء الاختبار',
       'leaderboard': 'لوحة المتصدرين',
       'settings': 'الإعدادات',
       'about': 'حول',
+      'appDescription': 'تطبيق اختبارات تفاعلي',
+      'madeWithLove': 'صُنع بـ ❤️ للتعلم',
 
       // Quiz Options Screen
       'quizOptions': 'خيارات الاختبار',
@@ -230,6 +265,19 @@ class AppLocalizations {
       'date': 'التاريخ',
       'clearScores': 'مسح النتائج',
       'confirmClear': 'هل أنت متأكد من رغبتك في مسح جميع النتائج؟',
+      'allCategories': 'جميع الفئات',
+      'results': 'نتائج',
+      'noResultsForCategory': 'لم يتم العثور على نتائج لهذه الفئة',
+      'selected': 'محدد',
+      'selectItems': 'تحديد العناصر',
+      'selectAll': 'تحديد الكل',
+      'deselectAll': 'إلغاء تحديد الكل',
+      'deleteSelected': 'حذف المحدد',
+      'confirmDeleteSelected': 'هل أنت متأكد من رغبتك في حذف',
+      'items': 'عناصر',
+      'delete': 'حذف',
+      'clearAllScores': 'مسح جميع النتائج',
+      'confirmClearAll': 'هل أنت متأكد من رغبتك في مسح جميع النتائج؟',
 
       // Settings Screen
       'darkMode': 'الوضع المظلم',

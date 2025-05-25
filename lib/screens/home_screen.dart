@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:project_application/providers/settings_provider.dart';
 import 'package:project_application/screens/about_screen.dart';
 import 'package:project_application/screens/leaderboard_screen.dart';
 import 'package:project_application/screens/quiz_options_screen.dart';
@@ -9,6 +7,7 @@ import 'package:project_application/services/sound_service.dart';
 import 'package:project_application/services/vibration_service.dart';
 import 'package:project_application/utils/constants.dart';
 import 'package:project_application/utils/localization.dart';
+import 'package:project_application/widgets/app_navigation_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
   final SoundService _soundService = SoundService();
@@ -18,15 +17,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settingsProvider = Provider.of<SettingsProvider>(context);
     final localizations = AppLocalizations.of(context);
 
-    // Set sound and vibration based on settings
-    _soundService.setSoundEnabled(settingsProvider.soundEnabled);
-    _vibrationService.setVibrationEnabled(settingsProvider.vibrationEnabled);
+    // Services are now automatically synced via SettingsProvider
 
     return Scaffold(
       appBar: AppBar(title: Text(localizations.get('appName'))),
+      drawer: AppNavigationDrawer(currentRoute: 'home'),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(AppConstants.defaultPadding),

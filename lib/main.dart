@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,6 @@ import 'package:project_application/providers/settings_provider.dart';
 import 'package:project_application/screens/home_screen.dart';
 import 'package:project_application/services/vibration_service.dart';
 import 'package:project_application/services/notification_service.dart';
-import 'package:project_application/services/background_service.dart';
 import 'package:project_application/utils/constants.dart';
 import 'package:project_application/utils/localization.dart';
 import 'package:project_application/utils/theme.dart';
@@ -14,28 +14,30 @@ import 'package:project_application/utils/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize vibration service
+  // Initialize vibration service (singleton)
   final vibrationService = VibrationService();
   try {
     await vibrationService.init();
+    if (kDebugMode) {
+      print('Vibration service initialization completed');
+    }
   } catch (e) {
-    print('Failed to initialize vibration service: $e');
+    if (kDebugMode) {
+      print('Failed to initialize vibration service: $e');
+    }
   }
 
   // Initialize notification service
   final notificationService = NotificationService();
   try {
     await notificationService.initialize();
+    if (kDebugMode) {
+      print('Simple notification service initialization completed');
+    }
   } catch (e) {
-    print('Failed to initialize notification service: $e');
-  }
-
-  // Initialize background service
-  final backgroundService = BackgroundService();
-  try {
-    await backgroundService.start();
-  } catch (e) {
-    print('Failed to initialize background service: $e');
+    if (kDebugMode) {
+      print('Failed to initialize notification service: $e');
+    }
   }
 
   runApp(const MyApp());

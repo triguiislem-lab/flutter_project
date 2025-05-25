@@ -140,8 +140,8 @@ class QuizProvider extends ChangeNotifier {
 
     _storageService.saveQuizResult(result);
 
-    // Send congratulations notification
-    _notificationService.showCongratulationsNotification(
+    // Send quiz completion notification
+    _notificationService.showQuizCompletionNotification(
       score: _score,
       totalQuestions: _questions.length,
     );

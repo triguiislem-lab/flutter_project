@@ -1,10 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_application/services/storage_service.dart';
 import 'package:project_application/services/notification_service.dart';
+import 'package:project_application/services/sound_service.dart';
+import 'package:project_application/services/vibration_service.dart';
 
 class SettingsProvider extends ChangeNotifier {
   final StorageService _storageService = StorageService();
   final NotificationService _notificationService = NotificationService();
+  final SoundService _soundService = SoundService();
+  final VibrationService _vibrationService = VibrationService();
 
   bool _darkMode = false;
   bool _soundEnabled = true;
@@ -29,9 +34,15 @@ class SettingsProvider extends ChangeNotifier {
       _language = settings['language'] ?? 'en';
       _notificationsEnabled = settings['notificationsEnabled'] ?? true;
 
+      // Sync services with loaded settings
+      _soundService.setSoundEnabled(_soundEnabled);
+      _vibrationService.setVibrationEnabled(_vibrationEnabled);
+
       notifyListeners();
     } catch (e) {
-      print('Error loading settings: $e');
+      if (kDebugMode) {
+        print('Error loading settings: $e');
+      }
     }
   }
 
@@ -60,6 +71,7 @@ class SettingsProvider extends ChangeNotifier {
   // Toggle sound
   void toggleSound() {
     _soundEnabled = !_soundEnabled;
+    _soundService.setSoundEnabled(_soundEnabled);
     _saveSettings();
     notifyListeners();
   }
@@ -67,6 +79,7 @@ class SettingsProvider extends ChangeNotifier {
   // Toggle vibration
   void toggleVibration() {
     _vibrationEnabled = !_vibrationEnabled;
+    _vibrationService.setVibrationEnabled(_vibrationEnabled);
     _saveSettings();
     notifyListeners();
   }

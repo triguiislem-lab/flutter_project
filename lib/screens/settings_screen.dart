@@ -1,11 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:project_application/providers/settings_provider.dart';
-import 'package:project_application/screens/notification_settings_screen.dart';
+import 'package:project_application/screens/simple_notification_settings_screen.dart';
+import 'package:project_application/screens/vibration_test_screen.dart';
 import 'package:project_application/services/sound_service.dart';
 import 'package:project_application/services/vibration_service.dart';
 import 'package:project_application/utils/constants.dart';
 import 'package:project_application/utils/localization.dart';
+import 'package:project_application/widgets/app_navigation_drawer.dart';
 
 class SettingsScreen extends StatelessWidget {
   final SoundService _soundService = SoundService();
@@ -20,6 +23,7 @@ class SettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(localizations.get('settings'))),
+      drawer: AppNavigationDrawer(currentRoute: 'settings'),
       body: ListView(
         padding: const EdgeInsets.all(AppConstants.defaultPadding),
         children: [
@@ -87,11 +91,31 @@ class SettingsScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const NotificationSettingsScreen(),
+                  builder:
+                      (context) => const SimpleNotificationSettingsScreen(),
                 ),
               );
             },
           ),
+
+          // Sound & Vibration test (debug only)
+          if (kDebugMode)
+            _buildNavigationTile(
+              context,
+              title: 'Test Sound & Vibration',
+              icon: Icons.vibration,
+              subtitle: 'Debug audio and haptic functionality',
+              onTap: () {
+                _soundService.playClickSound();
+                _vibrationService.vibrateOnTap();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const VibrationTestScreen(),
+                  ),
+                );
+              },
+            ),
 
           // Language selection
           _buildSettingTile(

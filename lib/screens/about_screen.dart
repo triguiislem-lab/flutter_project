@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_application/utils/constants.dart';
 import 'package:project_application/utils/localization.dart';
+import 'package:project_application/widgets/app_navigation_drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -9,24 +10,19 @@ class AboutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context);
-    
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localizations.get('aboutApp')),
-      ),
+      appBar: AppBar(title: Text(localizations.get('aboutApp'))),
+      drawer: AppNavigationDrawer(currentRoute: 'about'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppConstants.defaultPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // App logo
-            const Icon(
-              Icons.quiz,
-              size: 100,
-              color: Colors.blue,
-            ),
+            const Icon(Icons.quiz, size: 100, color: Colors.blue),
             const SizedBox(height: AppConstants.defaultPadding),
-            
+
             // App name
             Text(
               localizations.get('appName'),
@@ -34,14 +30,14 @@ class AboutScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppConstants.smallPadding),
-            
+
             // App version
             Text(
               '${localizations.get('version')} 1.0.0',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: AppConstants.largePadding),
-            
+
             // App description
             Card(
               child: Padding(
@@ -70,7 +66,7 @@ class AboutScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppConstants.defaultPadding),
-            
+
             // Features list
             Card(
               child: Padding(
@@ -85,10 +81,16 @@ class AboutScreen extends StatelessWidget {
                     const SizedBox(height: AppConstants.smallPadding),
                     _buildFeatureItem(context, 'Multiple quiz categories'),
                     _buildFeatureItem(context, 'Adjustable difficulty levels'),
-                    _buildFeatureItem(context, 'Score tracking and leaderboard'),
+                    _buildFeatureItem(
+                      context,
+                      'Score tracking and leaderboard',
+                    ),
                     _buildFeatureItem(context, 'Dark and light themes'),
                     _buildFeatureItem(context, 'Sound effects and vibration'),
-                    _buildFeatureItem(context, 'Multiple languages (English, French, Arabic)'),
+                    _buildFeatureItem(
+                      context,
+                      'Multiple languages (English, French, Arabic)',
+                    ),
                   ],
                 ),
               ),
@@ -107,10 +109,7 @@ class AboutScreen extends StatelessWidget {
           const Icon(Icons.check_circle, color: Colors.green),
           const SizedBox(width: AppConstants.smallPadding),
           Expanded(
-            child: Text(
-              text,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+            child: Text(text, style: Theme.of(context).textTheme.bodyLarge),
           ),
         ],
       ),

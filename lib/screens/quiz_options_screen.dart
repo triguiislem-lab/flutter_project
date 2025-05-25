@@ -8,6 +8,7 @@ import 'package:project_application/services/sound_service.dart';
 import 'package:project_application/services/vibration_service.dart';
 import 'package:project_application/utils/constants.dart';
 import 'package:project_application/utils/localization.dart';
+import 'package:project_application/widgets/app_navigation_drawer.dart';
 import 'package:project_application/widgets/category_selector.dart';
 import 'package:project_application/widgets/difficulty_selector.dart';
 
@@ -43,6 +44,7 @@ class _QuizOptionsScreenState extends State<QuizOptionsScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(localizations.get('quizOptions'))),
+      drawer: AppNavigationDrawer(currentRoute: 'quiz_options'),
       body:
           quizProvider.status == QuizStatus.loading
               ? const Center(child: CircularProgressIndicator())
