@@ -7,7 +7,7 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 /// Service de gestion des notifications locales pour l'application QCM
-/// 
+///
 /// Fonctionnalités :
 /// - Notifications de rappel quotidien
 /// - Notifications de nouveaux quiz
@@ -36,19 +36,13 @@ class NotificationService {
       const AndroidInitializationSettings initializationSettingsAndroid =
           AndroidInitializationSettings('@mipmap/ic_launcher');
 
-      // Configuration iOS
-      const DarwinInitializationSettings initializationSettingsIOS =
-          DarwinInitializationSettings(
-        requestAlertPermission: true,
-        requestBadgePermission: true,
-        requestSoundPermission: true,
-      );
+     
 
       // Configuration générale
       const InitializationSettings initializationSettings =
           InitializationSettings(
         android: initializationSettingsAndroid,
-        iOS: initializationSettingsIOS,
+      
       );
 
       // Initialiser le plugin
@@ -78,25 +72,14 @@ class NotificationService {
       // Android 13+ nécessite une permission explicite
       final status = await Permission.notification.request();
       return status.isGranted;
-    } else if (Platform.isIOS) {
-      // iOS gère les permissions via le plugin
-      final bool? result = await _flutterLocalNotificationsPlugin
-          .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>()
-          ?.requestPermissions(
-            alert: true,
-            badge: true,
-            sound: true,
-          );
-      return result ?? false;
-    }
+    } 
     return true;
   }
 
   /// Gère le tap sur une notification
   void _onNotificationTapped(NotificationResponse notificationResponse) {
     final String? payload = notificationResponse.payload;
-    
+
     if (kDebugMode) {
       print('Notification tappée avec payload: $payload');
     }
@@ -108,7 +91,7 @@ class NotificationService {
   /// Active ou désactive les notifications
   void setNotificationsEnabled(bool enabled) {
     _notificationsEnabled = enabled;
-    
+
     if (!enabled) {
       cancelAllNotifications();
     } else {
@@ -229,11 +212,11 @@ class NotificationService {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
         tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
-    
+
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    
+
     return scheduledDate;
   }
 
@@ -274,7 +257,7 @@ class NotificationService {
 
     final percentage = (score / totalQuestions * 100).round();
     String message;
-    
+
     if (percentage >= 90) {
       message = 'Excellent ! $score/$totalQuestions - Vous êtes un expert ! 🏆';
     } else if (percentage >= 70) {
@@ -301,6 +284,35 @@ class NotificationService {
         ),
       ),
       payload: 'quiz_result:$score:$totalQuestions',
+    );
+  }
+
+  /// Envoie une notification instantanée
+  Future<void> showInstantNotification({
+    required String title,
+    required String body,
+    String? payload,
+  }) async {
+    if (!_notificationsEnabled || !_isInitialized) return;
+
+    await _flutterLocalNotificationsPlugin.show(
+      500, // ID unique
+      title,
+      body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'instant_notifications',
+          'Notifications instantanées',
+          channelDescription: 'Notifications immédiates',
+          importance: Importance.high,
+          priority: Priority.high,
+          icon: '@mipmap/ic_launcher',
+        ),
+        iOS: DarwinNotificationDetails(
+          categoryIdentifier: 'instant_notifications',
+        ),
+      ),
+      payload: payload,
     );
   }
 
