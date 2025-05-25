@@ -70,7 +70,6 @@ lib/
 ## 📱 Platform Support
 
 - **Android**: Full notifications, vibrations, and sounds
-- **iOS**: Native notifications with permissions and haptic feedback
 - **Web**: Responsive interface with limited notification support (no vibration)
 
 ## 🔧 Dependencies
@@ -108,5 +107,3 @@ This project is licensed under the MIT License.
 - **Flutter Community** for the packages used
 
 ---
-
-**Developed with ❤️ in Flutter**
